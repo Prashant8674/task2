@@ -6,24 +6,24 @@ mongoose.set('strictQuery', true);
 mongoose.connect("mongodb://127.0.0.1/FETCH_WEATHER_DATA");
 
 const postSchema = new mongoose.Schema({
-    latitude: [{
-        latitude: {
-            type: Number,
-            required: true
-        }
-    }],
-    longitude: [{
-        longitude: {
-            type: Number,
-            required: true
-        }
-    }],
-    timezone: [{
-        timezone: {
-            type: String,
-            required: true
-        }
-    }],
+
+    latitude: {
+        type: Number,
+        required: true
+    }
+    ,
+
+    longitude: {
+        type: Number,
+        required: true
+    }
+    ,
+
+    timezone: {
+        type: String,
+        required: true
+    }
+    ,
     currently: [{
         time: {
             type: Number,
@@ -60,19 +60,15 @@ async function fetchedWeatherData() {
     };
     const fetchedWeatherData = await fetch("https://dark-sky.p.rapidapi.com/20.593684,78.96288?units=auto&lang=en", options);
     const response1 = await fetchedWeatherData.json();
-    
+    //const response2 = JSON.parse(response1);
 
-     //console.log(response2);
-    var array = Object.entries(response1).map(([key , value])=> ([key , value]));
+    const array = [];
+    array.push(response1)
 
-    
 
-    
-
-    
     for (let i = 0; i < array.length; i++) {
         const post = new Post({
-            
+
             latitude: array[i]['latitude'],
             longitude: array[i]['longitude'],
             timezone: array[i]['timezone'],
